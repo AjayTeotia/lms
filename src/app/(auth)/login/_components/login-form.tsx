@@ -11,12 +11,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth-client";
-import { GithubIcon, LoaderIcon, MailIcon } from "lucide-react";
-import { useTransition } from "react";
+import { GithubIcon, LoaderIcon, SendIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
 
 export function LoginForm() {
+  const router = useRouter();
   const [githubPending, startGithubTransition] = useTransition();
+  const [email, setEmail] = useState("");
+  const [emailPending, startEmailTransition] = useTransition();
 
   async function signInWithGithub() {
     startGithubTransition(async () => {
@@ -32,6 +36,26 @@ export function LoginForm() {
           onError: (error) => {
             toast.error(
               `Failed to sign in with Github: ${error.error.message}`
+            );
+          },
+        },
+      });
+    });
+  }
+
+  function signInWithEmail() {
+    startEmailTransition(async () => {
+      await authClient.emailOtp.sendVerificationOtp({
+        email: email,
+        type: "sign-in",
+        fetchOptions: {
+          onSuccess: () => {
+            toast.success("Verification email sent! Please check your inbox.");
+            router.push(`/verify-request?email=${email}`);
+          },
+          onError: (error) => {
+            toast.error(
+              `Failed to send verification email: ${error.error.message}`
             );
           },
         },
@@ -56,7 +80,10 @@ export function LoginForm() {
           disabled={githubPending}
         >
           {githubPending ? (
-            <LoaderIcon className="size-4 animate-spin" />
+            <>
+              <LoaderIcon className="size-4 animate-spin" />
+              <span>Signing in with Github...</span>
+            </>
           ) : (
             <>
               <GithubIcon className="size-4" />
@@ -74,12 +101,32 @@ export function LoginForm() {
         <div className="grid gap-3">
           <div className="grid gap-2">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="m@example.com" />
+            <Input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              id="email"
+              type="email"
+              placeholder="m@example.com"
+              required
+            />
           </div>
 
-          <Button>
-            <MailIcon className="size-4" />
-            Continue with Email
+          <Button
+            onClick={signInWithEmail}
+            disabled={emailPending}
+            className="w-full"
+          >
+            {emailPending ? (
+              <>
+                <LoaderIcon className="size-4 animate-spin" />
+                <span>Sending verification email...</span>
+              </>
+            ) : (
+              <>
+                <SendIcon className="size-4" />
+                Continue with Email
+              </>
+            )}
           </Button>
         </div>
       </CardContent>
