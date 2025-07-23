@@ -17,10 +17,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { authClient } from "@/lib/auth-client";
+import { useSignOut } from "@/hooks/use-sign-out";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 
 interface UserDropdownProps {
   name: string;
@@ -29,28 +27,19 @@ interface UserDropdownProps {
 }
 
 export function UserDropdown({ name, email, image }: UserDropdownProps) {
-  const router = useRouter();
+  const { handleLogout } = useSignOut();
 
-  async function handleLogout() {
-    await authClient.signOut({
-      fetchOptions: {
-        onSuccess: () => {
-          toast.success("Logged out successfully!");
-          router.push("/");
-        },
-        onError: (error) => {
-          toast.error(`Failed to log out: ${error.error.message}`);
-        },
-      },
-    });
-  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="h-auto p-0 hover:bg-transparent">
           <Avatar>
             <AvatarImage src={image} alt="Profile image" />
-            <AvatarFallback>{name.charAt(0).toUpperCase()}</AvatarFallback>
+            <AvatarFallback>
+              {name && name.length > 0
+                ? name[0].toUpperCase()
+                : email.charAt(0).toUpperCase()}
+            </AvatarFallback>
           </Avatar>
           <ChevronDownIcon
             size={16}
@@ -62,7 +51,7 @@ export function UserDropdown({ name, email, image }: UserDropdownProps) {
       <DropdownMenuContent align="end" className="max-w-64">
         <DropdownMenuLabel className="flex min-w-0 flex-col">
           <span className="text-foreground truncate text-sm font-medium">
-            {name}
+            {name && name.length > 0 ? name : email.split("@")[0]}
           </span>
           <span className="text-muted-foreground truncate text-xs font-normal">
             {email}
