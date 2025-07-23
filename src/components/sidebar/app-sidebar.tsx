@@ -36,7 +36,7 @@ const data = {
     },
     {
       title: "Courses",
-      url: "/admit/course",
+      url: "/admin/course",
       icon: IconListDetails,
     },
     // {
