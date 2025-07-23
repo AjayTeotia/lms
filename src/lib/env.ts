@@ -9,6 +9,7 @@ export const env = createEnv({
     GITHUB_CLIENT_ID: z.string().min(1),
     GITHUB_CLIENT_SECRET: z.string().min(1),
     RESEND_API_KEY: z.string().min(1),
+    ARCJET_KEY: z.string().min(1),
   },
 
   // For Next.js >= 13.4.4, you only need to destructure client variables:
