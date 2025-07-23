@@ -36,7 +36,7 @@ export default function Home() {
           <Button onClick={handleLogout}>Logout</Button>
         </div>
       ) : (
-        <Button>Sign in</Button>
+        <Button onClick={() => router.push("/login")}>Sign in</Button>
       )}
     </div>
   );
