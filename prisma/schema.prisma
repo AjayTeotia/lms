@@ -15,15 +15,17 @@ datasource db {
 }
 
 model User {
-  id            String    @id
+  id            String   @id
   name          String
   email         String
   emailVerified Boolean
   image         String?
   createdAt     DateTime
   updatedAt     DateTime
-  sessions      Session[]
-  accounts      Account[]
+
+  sessions Session[]
+  accounts Account[]
+  courses  Course[]
 
   @@unique([email])
   @@map("user")
@@ -72,4 +74,40 @@ model Verification {
   updatedAt  DateTime?
 
   @@map("verification")
+}
+
+enum CourseLevel {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum CourseStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model Course {
+  id String @id @default(uuid())
+
+  title       String
+  description String
+  fileKey     String
+  price       Int
+  duration    Int
+  
+  level       CourseLevel @default(BEGINNER)
+
+  category         String
+  smallDescription String
+  slug             String @unique
+
+  status CourseStatus @default(DRAFT)
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
