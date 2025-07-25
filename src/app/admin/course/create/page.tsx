@@ -40,6 +40,7 @@ import {
 } from "@/lib/zod-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { RichTextEditor } from "@/components/rich-text-editor";
 
 export default function CreateCoursePage() {
   // 1. Define your form.
@@ -172,11 +173,13 @@ export default function CreateCoursePage() {
                     <FormLabel>Description</FormLabel>
 
                     <FormControl>
-                      <Textarea
+                      <RichTextEditor field={field} />
+
+                      {/* <Textarea
                         placeholder="Description"
                         className="min-h-[120px]"
                         {...field}
-                      />
+                      /> */}
                     </FormControl>
 
                     <FormMessage />
