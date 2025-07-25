@@ -48,7 +48,7 @@ export function UserDropdown({ name, email, image }: UserDropdownProps) {
           />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="max-w-64">
+      <DropdownMenuContent align="end" className="min-w-48">
         <DropdownMenuLabel className="flex min-w-0 flex-col">
           <span className="text-foreground truncate text-sm font-medium">
             {name && name.length > 0 ? name : email.split("@")[0]}
