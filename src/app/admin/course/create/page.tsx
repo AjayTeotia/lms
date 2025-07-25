@@ -24,6 +24,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
+import { Uploader } from "@/components/file-uploader/uploader";
+import { RichTextEditor } from "@/components/rich-text-editor";
 import {
   Select,
   SelectContent,
@@ -40,7 +42,6 @@ import {
 } from "@/lib/zod-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { RichTextEditor } from "@/components/rich-text-editor";
 
 export default function CreateCoursePage() {
   // 1. Define your form.
@@ -174,12 +175,6 @@ export default function CreateCoursePage() {
 
                     <FormControl>
                       <RichTextEditor field={field} />
-
-                      {/* <Textarea
-                        placeholder="Description"
-                        className="min-h-[120px]"
-                        {...field}
-                      /> */}
                     </FormControl>
 
                     <FormMessage />
@@ -195,7 +190,9 @@ export default function CreateCoursePage() {
                     <FormLabel>Thumbnail image</FormLabel>
 
                     <FormControl>
-                      <Input placeholder="Thumbnail url" {...field} />
+                      <Uploader />
+
+                      {/* <Input placeholder="Thumbnail url" {...field} /> */}
                     </FormControl>
 
                     <FormMessage />
