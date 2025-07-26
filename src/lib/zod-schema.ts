@@ -21,7 +21,7 @@ export const courseCategories = [
   "Other",
 ] as const;
 
-export const createCourseSchema = z.object({
+export const courseSchema = z.object({
   title: z
     .string()
     .min(3, { message: "Title must be at least 3 characters" })
@@ -67,4 +67,4 @@ export const createCourseSchema = z.object({
   }),
 });
 
-export type CourseSchemaType = z.input<typeof createCourseSchema>;
+export type CourseSchemaType = z.input<typeof courseSchema>;
