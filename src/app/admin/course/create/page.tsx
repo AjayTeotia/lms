@@ -1,3 +1,5 @@
+// page
+
 "use client";
 
 import { buttonVariants } from "@/components/ui/button";
@@ -190,9 +192,7 @@ export default function CreateCoursePage() {
                     <FormLabel>Thumbnail image</FormLabel>
 
                     <FormControl>
-                      <Uploader />
-
-                      {/* <Input placeholder="Thumbnail url" {...field} /> */}
+                      <Uploader value={field.value} onChange={field.onChange} />
                     </FormControl>
 
                     <FormMessage />
