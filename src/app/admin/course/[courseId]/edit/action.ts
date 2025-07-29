@@ -1,10 +1,10 @@
 "use server";
 
 import { requireAdmin } from "@/app/data/admin/require-admin";
-import arcjet, { detectBot, fixedWindow } from "@/lib/arcjet";
 import { prisma } from "@/lib/db";
 import { ApiResponse } from "@/lib/type";
 import { courseSchema, CourseSchemaType } from "@/lib/zod-schema";
+import arcjet, { detectBot, fixedWindow } from "@/lib/arcjet";
 import { request } from "@arcjet/next";
 
 const aj = arcjet
@@ -22,16 +22,17 @@ const aj = arcjet
     })
   );
 
-export async function CreateCourse(
-  data: CourseSchemaType
+export async function editCourse(
+  data: CourseSchemaType,
+  courseId: string
 ): Promise<ApiResponse> {
-  const session = await requireAdmin();
+  const user = await requireAdmin();
 
   try {
     const req = await request();
 
     const decision = await aj.protect(req, {
-      fingerprints: session?.user.id as string,
+      fingerprints: user?.user.id as string,
     });
 
     if (decision.isDenied()) {
@@ -48,30 +49,33 @@ export async function CreateCourse(
       }
     }
 
-    const validation = courseSchema.safeParse(data);
+    const result = courseSchema.safeParse(data);
 
-    if (!validation.success) {
+    if (!result.success) {
       return {
         status: "error",
-        message: "Invalid Form Data",
+        message: "Invalid data. Please try again.",
       };
     }
 
-    await prisma.course.create({
+    await prisma.course.update({
+      where: {
+        id: courseId,
+        userId: user.user.id,
+      },
       data: {
-        ...validation.data,
-        userId: session?.user.id as string,
+        ...result.data,
       },
     });
 
     return {
       status: "success",
-      message: "Course created successfully",
+      message: "Course updated successfully.",
     };
   } catch {
     return {
       status: "error",
-      message: "Failed to create course",
+      message: "Failed to update course. Please try again.",
     };
   }
 }

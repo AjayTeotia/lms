@@ -1,6 +1,6 @@
 "use client";
 
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -13,7 +13,6 @@ import Link from "next/link";
 
 import slugify from "slugify";
 
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -35,18 +34,18 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { CourseLevel, CourseStatus } from "@/generated/prisma";
+import { tryCatch } from "@/hooks/try-catch";
 import {
   courseCategories,
   courseSchema,
   CourseSchemaType,
 } from "@/lib/zod-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useTransition } from "react";
-import { tryCatch } from "@/hooks/try-catch";
-import { CreateCourse } from "./action";
-import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { CreateCourse } from "./action";
 
 export default function CreateCoursePage() {
   const [isPending, startTransition] = useTransition();

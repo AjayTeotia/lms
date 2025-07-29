@@ -114,6 +114,39 @@ model Course {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
+  chapter Chapter[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Chapter {
+  id String @id @default(uuid())
+
+  title    String
+  position Int
+
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId String
+
+  lesson Lesson[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Lesson {
+  id String @id @default(uuid())
+
+  title        String
+  description  String?
+  thumbnailUrl String?
+  videoUrl     String?
+  position     Int
+
+  chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  chapterId String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
