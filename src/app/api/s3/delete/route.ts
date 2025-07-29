@@ -1,4 +1,4 @@
-import { requireUser } from "@/app/data/admin/require-admin";
+import { requireAdmin } from "@/app/data/admin/require-admin";
 import arcjet, { detectBot, fixedWindow } from "@/lib/arcjet";
 import { env } from "@/lib/env";
 import { S3 } from "@/lib/s3-client";
@@ -21,7 +21,7 @@ const aj = arcjet
   );
 
 export async function DELETE(request: Request) {
-  const session = await requireUser();
+  const session = await requireAdmin();
 
   try {
     const decision = await aj.protect(request, {
