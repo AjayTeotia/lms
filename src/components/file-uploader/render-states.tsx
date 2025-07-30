@@ -53,17 +53,27 @@ export function RenderUploadedSate({
   previewUrl,
   isDeleting,
   handleRemoveFile,
+  fileType,
 }: {
   previewUrl: string;
   isDeleting: boolean;
   handleRemoveFile: () => void;
+  fileType: "image" | "video";
 }) {
   return (
-    <div>
-      <Image src={previewUrl} alt="Preview" fill className="object-cover p-2" />
+    <div className="relative group w-full h-full flex items-center justify-center">
+      {fileType === "video" ? (
+        <video src={previewUrl} controls className="w-full h-full rounded-md" />
+      ) : (
+        <Image
+          src={previewUrl}
+          alt="Preview"
+          fill
+          className="object-cover p-2"
+        />
+      )}
 
       <Button
-        // type="button"
         variant="destructive"
         size="icon"
         className={cn("absolute top-4 right-4")}
