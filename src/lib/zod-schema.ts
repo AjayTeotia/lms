@@ -67,4 +67,38 @@ export const courseSchema = z.object({
   }),
 });
 
+export const chapterSchema = z.object({
+  name: z
+    .string()
+    .min(3, { message: "Chapter name must be at least 3 characters" }),
+
+  courseId: z.string().uuid({
+    message: "Course ID is required and must be a valid UUID",
+  }),
+});
+
+export const lessonSchema = z.object({
+  name: z
+    .string()
+    .min(3, { message: "Lesson name must be at least 3 characters" }),
+
+  courseId: z.string().uuid({
+    message: "Course ID is required and must be a valid UUID",
+  }),
+
+  chapterId: z.string().uuid({
+    message: "Chapter ID is required and must be a valid UUID",
+  }),
+
+  description: z
+    .string()
+    .min(3, { message: "Description must be at least 3 characters long" })
+    .optional(),
+
+  thumbnailUrl: z.string().optional(),
+  videoUrl: z.string().optional(),
+});
+
 export type CourseSchemaType = z.input<typeof courseSchema>;
+export type ChapterSchemaType = z.input<typeof chapterSchema>;
+export type LessonSchemaType = z.input<typeof lessonSchema>;
