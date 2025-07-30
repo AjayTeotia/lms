@@ -380,7 +380,7 @@ export function CourseStructure(data: CourseStructureProps) {
                                         <FileTextIcon className="size-4" />
 
                                         <Link
-                                          href={`/admin/course/${data.data.id}/${item.id}/${lesson.id}/edit`}
+                                          href={`/admin/course/${data.data.id}/${item.id}/${lesson.id}`}
                                         >
                                           {lesson.title}
                                         </Link>
