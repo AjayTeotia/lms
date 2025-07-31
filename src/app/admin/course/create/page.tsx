@@ -46,10 +46,12 @@ import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { CreateCourse } from "./action";
+import { useConfetti } from "@/hooks/use-confetti";
 
 export default function CreateCoursePage() {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const { triggerConfetti } = useConfetti();
 
   // 1. Define your form.
   const form = useForm<CourseSchemaType>({
@@ -80,6 +82,7 @@ export default function CreateCoursePage() {
 
       if (result.status === "success") {
         toast.success(result.message);
+        triggerConfetti();
         form.reset();
         router.push("/admin/course");
       } else if (result.status === "error") {
@@ -210,7 +213,11 @@ export default function CreateCoursePage() {
                     <FormLabel>Thumbnail image</FormLabel>
 
                     <FormControl>
-                      <Uploader value={field.value} onChange={field.onChange} fileTypeAccepted="image" />
+                      <Uploader
+                        value={field.value}
+                        onChange={field.onChange}
+                        fileTypeAccepted="image"
+                      />
                     </FormControl>
 
                     <FormMessage />
