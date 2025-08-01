@@ -50,7 +50,7 @@ export function DeleteChapterModal({
 
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
-      <AlertDialogTrigger>
+      <AlertDialogTrigger asChild>
         <Button variant="destructive" size="icon">
           <Trash2Icon className="size-4" />
         </Button>
