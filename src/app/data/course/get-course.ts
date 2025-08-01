@@ -2,7 +2,8 @@ import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 
 export async function getIndividualCourse(slug: string) {
-  
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
   const course = await prisma.course.findUnique({
     where: {
       slug: slug,
