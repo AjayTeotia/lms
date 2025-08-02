@@ -48,7 +48,7 @@ export function PublicCourseCard({ data }: props) {
           <div className="flex items-center gap-x-2">
             <SchoolIcon className="size-6 p-1 rounded-md text-primary bg-primary/10" />
 
-            <p className="text-sm text-muted-foreground">{data.category} h</p>
+            <p className="text-sm text-muted-foreground">{data.category}</p>
           </div>
         </div>
 
