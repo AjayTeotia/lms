@@ -2,25 +2,33 @@
 
 import { Button } from "@/components/ui/button";
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from "@/components/ui/card";
 import {
-    InputOTP,
-    InputOTPGroup,
-    InputOTPSeparator,
-    InputOTPSlot,
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
 } from "@/components/ui/input-otp";
 import { authClient } from "@/lib/auth-client";
 import { BadgeCheckIcon, LoaderIcon } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useTransition } from "react";
+import { Suspense, useState, useTransition } from "react";
 import { toast } from "sonner";
 
-export default function VerifyRequestPage() {
+export default function VerifyRequestRoute() {
+  return (
+    <Suspense>
+      <VerifyRequestPage />
+    </Suspense>
+  );
+}
+
+function VerifyRequestPage() {
   const params = useSearchParams();
   const router = useRouter();
   const [otp, setOtp] = useState("");
