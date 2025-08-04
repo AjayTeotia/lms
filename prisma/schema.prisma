@@ -23,10 +23,11 @@ model User {
   createdAt     DateTime
   updatedAt     DateTime
 
-  sessions    Session[]
-  accounts    Account[]
-  courses     Course[]
-  enrollments Enrollment[]
+  sessions       Session[]
+  accounts       Account[]
+  courses        Course[]
+  enrollments    Enrollment[]
+  lessonProgress LessonProgress[]
 
   stripeCustomerId String? @unique
 
@@ -154,6 +155,8 @@ model Lesson {
   chapter   Chapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
   chapterId String
 
+  lessonProgress LessonProgress[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -180,4 +183,21 @@ model Enrollment {
   updatedAt DateTime @updatedAt
 
   @@unique([courseId, userId])
+}
+
+model LessonProgress {
+  id String @id @default(uuid())
+
+  completed Boolean @default(false)
+
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  Lesson   Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  lessonId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, lessonId])
 }
