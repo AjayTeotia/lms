@@ -1,5 +1,5 @@
 # Vibe 🚀  
-**The Ultimate AI-Powered LMS Platform**  
+**The Ultimate LMS Platform**  
 _Build full-featured, secure, and scalable LMS platforms effortlessly._
 
 ---
