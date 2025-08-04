@@ -96,7 +96,7 @@ export async function enrollInCourseAction(
         where: {
           courseId_userId: {
             userId: user.user.id,
-            courseId: course.id,
+            courseId: courseId,
           },
         },
         select: {
@@ -108,7 +108,7 @@ export async function enrollInCourseAction(
       if (existingEnrollment?.status === "ACTIVE") {
         return {
           status: "success",
-          message: "Successfully enrolled in course",
+          message: "You are already enrolled in this Course",
         };
       }
 
@@ -128,8 +128,8 @@ export async function enrollInCourseAction(
       } else {
         enrollment = await tx.enrollment.create({
           data: {
-            courseId: course.id,
             userId: user.user.id,
+            courseId: course.id,
             amount: course.price,
             status: "PENDING",
           },
@@ -165,7 +165,7 @@ export async function enrollInCourseAction(
     if (error instanceof Stripe.errors.StripeError) {
       return {
         status: "error",
-        message: "Payment system error. Please try again.",
+        message: "Payment system error. Please try again later.",
       };
     }
 
