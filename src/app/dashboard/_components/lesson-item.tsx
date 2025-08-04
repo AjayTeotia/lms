@@ -12,11 +12,10 @@ interface props {
   };
   slug: string;
   isActive?: boolean;
+  completed: boolean;
 }
 
-export function LessonItem({ lesson, slug, isActive }: props) {
-  const completed = false;
-
+export function LessonItem({ lesson, slug, isActive, completed }: props) {
   return (
     <Link
       href={`/dashboard/${slug}/${lesson.id}`}
